@@ -1,0 +1,20 @@
+{
+  "name": "social-prediction",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "concurrently --kill-others \"npm --prefix packages/sb-server run dev\"  \"npm --prefix packages/social-betting run dev\"  ",
+    "dev": "concurrently --kill-others \"npm --prefix packages/sb-server run dev\"  \"npm --prefix packages/social-betting run dev\"  ",
+    "sb-server": "cd packages/sb-server && npm run dev",
+    "social-betting": "cd packages/social-betting && npm run dev",
+    "install-all": "npm ci && cd packages/sb-server && npm ci && cd ../social-betting && npm ci",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "npm-run-all": "^4.1.5"
+  }
+}

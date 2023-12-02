@@ -1,0 +1,42 @@
+.create-bet-container {
+    background: #2c3e50; /* Dark background color */
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 350px;
+    margin: 50px auto;
+    color: #ecf0f1; /* Light text color for contrast */
+    text-align: left;
+  }
+  
+  .create-bet-container h1 {
+    margin-bottom: 10px;
+  }
+  
+  .create-bet-container form {
+    margin-top: 20px;
+  }
+  
+  .create-bet-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+  }
+  
+  .create-bet-container button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #3498db; /* Sign up button color */
+    color: white;
+    cursor: pointer;
+  }
+  
+  .social-login {
+    margin-top: 20px;
+  }
+  

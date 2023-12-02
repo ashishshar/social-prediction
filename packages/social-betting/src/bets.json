@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "madeBy": "User1",
+        "prediction": "India will win the T20 World Cup",
+        "betAmount": "$100",
+        "winningAmount": "$200",
+        "status": "open"
+    },
+    {
+        "id": 2,
+        "madeBy": "User2",
+        "prediction": "Bitcoin price will reach $100,000 by end of the year",
+        "betAmount": "$50",
+        "winningAmount": "$100",
+        "status": "matched"
+    }
+]
