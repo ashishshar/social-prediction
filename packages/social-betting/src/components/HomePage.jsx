@@ -49,6 +49,12 @@ const HomePage = () => {
     };
 
 
+    const onBetCreateUpdate = (status) => {
+        fetchBets('open');
+        fetchBets('matched');
+        fetchBets('closed');
+    };
+
     const fetchBets = async (status) => {
         try {
             const response = await fetch(`http://social-test.theox.co:3030/api/bets/${status}`); // Replace with your actual API endpoint
@@ -126,7 +132,7 @@ const HomePage = () => {
                             <ClosedBets bets={getBetsByStatus('closed')}/>
                         </Tab.Pane>
                         {activeTab === 'addBet' && <Tab.Pane eventKey="addBet" style={{ padding: 0 }}>
-                            <BetForm onSelectTab={onSelectTab} walletBalance={balance}/>
+                            <BetForm onSelectTab={onSelectTab} walletBalance={balance} onBetCreateUpdate={onBetCreateUpdate}/>
                         </Tab.Pane>}
                         <Tab.Pane eventKey="wallet" style={{ padding: 0 }} >
                             <Wallet walletBalance={balance} onBalanceUpdate={onBalanceUpdate}/>

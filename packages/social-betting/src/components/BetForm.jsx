@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import '../style/CreateBetPage.css'; // Make sure to link the CSS file
 import axios from 'axios';
 
-const CreateBetPage = ({ onSelectTab, walletBalance }) => {
+const CreateBetPage = ({ onSelectTab, walletBalance, onBetCreateUpdate }) => {
   const [formData, setFormData] = useState({
     maker: '',
     prediction: '',
@@ -26,9 +26,8 @@ const CreateBetPage = ({ onSelectTab, walletBalance }) => {
       const updateBalance = await axios.post('http://social-test.theox.co:3030/api/transactions/accept-bet', { amount: betAmount });
       if (updateBalance.status === 200) {
         await axios.post('http://social-test.theox.co:3030/api/bets/create', formData);
+        onBetCreateUpdate(true);
         onSelectTab('open');
-        this.forceUpdate();
-        window.location.reload();
       }else {
         alert('Insufficient balance');
         return;
