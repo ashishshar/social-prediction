@@ -9,7 +9,7 @@ const GoogleLoginButton = ({ clientId }) => {
 
   const onSuccess = async (tokenResponse) => {
     try {
-      const response = await axios.post('http://localhost:3030/api/auth/google', { token: tokenResponse.tokenId });
+      const response = await axios.post('http://social-test.theox.co:3030/api/auth/google', { token: tokenResponse.tokenId });
       // Handle response from backend if needed
       console.log(response.data);
     } catch (error) {

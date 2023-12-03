@@ -23,9 +23,9 @@ const CreateBetPage = ({ onSelectTab, walletBalance }) => {
         alert('Insufficient balance');
         return;
       }
-      const updateBalance = await axios.post('http://localhost:3030/api/transactions/accept-bet', { amount: betAmount });
+      const updateBalance = await axios.post('http://social-test.theox.co:3030/api/transactions/accept-bet', { amount: betAmount });
       if (updateBalance.status === 200) {
-        await axios.post('http://localhost:3030/api/bets/create', formData);
+        await axios.post('http://social-test.theox.co:3030/api/bets/create', formData);
         onSelectTab('open');
       }else {
         alert('Insufficient balance');

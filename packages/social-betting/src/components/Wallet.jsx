@@ -19,9 +19,9 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         // Fetch balance and transaction history when the component mounts
         const fetchWalletDetails = async () => {
             try {
-                const balanceResponse = await axios.get('http://localhost:3030/api/transactions/balance');
+                const balanceResponse = await axios.get('http://social-test.theox.co:3030/api/transactions/balance');
                 setBalance(balanceResponse.data.balance);
-                const historyResponse = await axios.get('http://localhost:3030/api/transactions/transaction-history');
+                const historyResponse = await axios.get('http://social-test.theox.co:3030/api/transactions/transaction-history');
                 setHistory(historyResponse.data);
             } catch (error) {
                 console.error('Error fetching wallet details:', error);
@@ -36,7 +36,7 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         const numberAmount = parseFloat(amount);
         if (numberAmount > 0) {
             try {
-                const response = await axios.post('http://localhost:3030/api/transactions/deposit', { amount: numberAmount });
+                const response = await axios.post('http://social-test.theox.co:3030/api/transactions/deposit', { amount: numberAmount });
                 
                 setBalance(response.data.balance);
                 setHistory(response.data.transactions);
@@ -55,7 +55,7 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         const numberAmount = parseFloat(amount);
         if (numberAmount > 0 && numberAmount <= balance) {
             try {
-                const response = await axios.post('http://localhost:3030/api/transactions/withdraw', { amount: numberAmount });
+                const response = await axios.post('http://social-test.theox.co:3030/api/transactions/withdraw', { amount: numberAmount });
                 setBalance(response.data.balance);
                 setHistory(response.data.transactions);
                 setAmount('');
