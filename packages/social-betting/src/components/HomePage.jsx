@@ -96,7 +96,7 @@ const HomePage = () => {
                 }}>SB</h5>
                 <div>
                     <span>Balance - ${balance}
-                    <GoogleLoginProviderWrapper clientId="201786175780-ghua3t38cla3lfaujh22nquvlfvmbqen.apps.googleusercontent.com" />
+                    <GoogleLoginProviderWrapper clientId="460608069611-j13onr1uke9e3sh3583annarfa2ut0sj.apps.googleusercontent.com" />
                     </span>
                     
                 </div>
