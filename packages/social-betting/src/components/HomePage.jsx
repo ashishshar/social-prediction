@@ -37,7 +37,7 @@ const HomePage = () => {
 
     const fetchBalance = async () => {
         try {
-            const response = await axios.get('http://social-test.theox.co:3030/api/transactions/balance');
+            const response = await axios.get('https://social-test.theox.co:3030/api/transactions/balance');
             setBalance(response.data.balance);
         } catch (error) {
             console.error('Error fetching balance:', error);
@@ -57,7 +57,7 @@ const HomePage = () => {
 
     const fetchBets = async (status) => {
         try {
-            const response = await fetch(`http://social-test.theox.co:3030/api/bets/${status}`); // Replace with your actual API endpoint
+            const response = await fetch(`https://social-test.theox.co:3030//api/bets/${status}`); // Replace with your actual API endpoint
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

@@ -15,9 +15,9 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
     const handleAcceptBet = async (betId) => {
         if (walletBalance >= bet.betAmount) {
             try {
-                const updateBalance = await axios.post('http://social-test.theox.co:3030/api/transactions/accept-bet', { amount: bet.betAmount });
+                const updateBalance = await axios.post('https://social-test.theox.co:3030//api/transactions/accept-bet', { amount: bet.betAmount });
                 if (updateBalance.status === 200) {
-                    const response = await axios.put(`http://social-test.theox.co:3030/api/bets/accept/${betId}`);
+                    const response = await axios.put(`https://social-test.theox.co:3030/api/bets/accept/${betId}`);
                     if (response.status === 200) {
                         console.log(`Accepted bet with ID: ${betId}`);
                         onBetAccepted(bet.id, bet.betAmount); // Update the wallet balance
@@ -38,7 +38,7 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleLike = async () => {
         try {
-            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/like/${bet.id}`);
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/like/${bet.id}`);
             setLikes(response.data.likes);
         } catch (error) {
             console.error('Error liking bet:', error);
@@ -47,7 +47,7 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleShare = async () => {
         try {
-            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/share/${bet._id}`);
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/share/${bet._id}`);
             setShares(response.data.shares);
         } catch (error) {
             console.error('Error sharing bet:', error);
@@ -56,7 +56,7 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleComment = async (text) => {
         try {
-            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text });
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text });
             setComments(response.data);
             setCommentText('');
         } catch (error) {
