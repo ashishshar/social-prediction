@@ -22,8 +22,8 @@ let server
 
 
 const options = {
-  key: fs.readFileSync(SSL_CRT_FILE),
-  cert: fs.readFileSync(SSL_KEY_FILE)
+  key: fs.readFileSync(process.env.SSL_CRT_FILE),
+  cert: fs.readFileSync(process.env.SSL_KEY_FILE)
 };
 
 server = https.createServer(options, app);
