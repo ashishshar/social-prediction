@@ -22,8 +22,8 @@ let server
 
 
 const options = {
-  key: fs.readFileSync('./social-prediction.key'),
-  cert: fs.readFileSync('./social-prediction.key')
+  key: fs.readFileSync(SSL_CRT_FILE),
+  cert: fs.readFileSync(SSL_KEY_FILE)
 };
 
 server = https.createServer(options, app);
