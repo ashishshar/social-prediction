@@ -90,13 +90,13 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
                             Accept
                         </Button>
                     )}
-                    <Button variant="link" onClick={handleLike} style={{ color: '#fff' }}>
+                    <Button variant="link" onClick={handleLike} style={{ color: '#fff', textDecoration: 'none'  }}>
                         <FontAwesomeIcon icon={faThumbsUp} /> {likes}
                     </Button>
-                    <Button variant="link" onClick={toggleCommentsModal} style={{ color: '#fff' }}>
+                    <Button variant="link" onClick={toggleCommentsModal} style={{ color: '#fff', textDecoration: 'none' }}>
                         <FontAwesomeIcon icon={faComment} /> {comments.length}
                     </Button>
-                    <Button variant="link" onClick={handleShare} style={{ color: '#fff' }}>
+                    <Button variant="link" onClick={handleShare} style={{ color: '#fff', textDecoration: 'none'  }}>
                         <FontAwesomeIcon icon={faShare} /> {shares}
                     </Button>
                 </div>
