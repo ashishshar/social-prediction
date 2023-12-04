@@ -10,10 +10,8 @@ const GoogleLoginButton = ({ clientId }) => {
   const onSuccess = async (tokenResponse) => {
     try {
       const response = await axios.post('http://social-test.theox.co:3030/api/auth/google', { token: tokenResponse.tokenId });
-      // Handle response from backend if needed
       console.log(response.data);
     } catch (error) {
-      // Handle error if the request fails
       console.error(error);
     }
   };
@@ -30,11 +28,6 @@ const GoogleLoginButton = ({ clientId }) => {
     isSignedIn: true,
   });
 
-
-  // const login = useGoogleLogin({
-  //   onSuccess: tokenResponse => console.log(tokenResponse),
-  //   onError: error => console.error(error),
-  // });
 
   return (
     <button variant="link" onClick={() => login()}  style={{ color: 'inherit', backgroundColor: 'transparent', border: 'none', boxShadow: 'none', marginLeft:'5px' }}>

@@ -1,10 +1,16 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Button, Modal, Form, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faShare } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import Comments from './Comments';
 
 const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
+    const [likes, setLikes] = useState(bet.likes?.length ?? 0);
+    const [shares, setShares] = useState(bet.shares ?? 0);
+    const [comments, setComments] = useState(bet.comments || []);
+    const [commentText, setCommentText] = useState('');
+    const [showCommentsModal, setShowCommentsModal] = useState(false);
 
     const handleAcceptBet = async (betId) => {
         if (walletBalance >= bet.betAmount) {
@@ -30,19 +36,36 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
         }
     };
 
-    const handleLike = () => {
-        // Perform like action
-        console.log('Liked bet:', bet.id);
+    const handleLike = async () => {
+        try {
+            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/like/${bet.id}`);
+            setLikes(response.data.likes);
+        } catch (error) {
+            console.error('Error liking bet:', error);
+        }
     };
 
-    const handleComment = () => {
-        // Perform comment action
-        console.log('Commented on bet:', bet.id);
+    const handleShare = async () => {
+        try {
+            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/share/${bet._id}`);
+            setShares(response.data.shares);
+        } catch (error) {
+            console.error('Error sharing bet:', error);
+        }
     };
 
-    const handleShare = () => {
-        // Perform share action
-        console.log('Shared bet:', bet.id);
+    const handleComment = async (text) => {
+        try {
+            const response = await axios.post(`http://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text });
+            setComments(response.data);
+            setCommentText('');
+        } catch (error) {
+            console.error('Error commenting:', error);
+        }
+    };
+
+    const toggleCommentsModal = () => {
+        setShowCommentsModal(!showCommentsModal);
     };
 
     return (
@@ -63,21 +86,40 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
             <Card.Footer className="bg-light text-white bg-dark">
                 <div className="d-flex justify-content-between">
                     {status === 'open' && (
-                        <Button variant="link" style={{ borderRadius: '10px', color: '#fff', textDecoration: 'none', }} onClick={() => handleAcceptBet(bet.id)}>
+                        <Button variant="link" style={{ color: '#fff' }} onClick={() => handleAcceptBet(bet._id)}>
                             Accept
                         </Button>
                     )}
-                    <Button variant="link" onClick={() => handleLike(bet.id)} style={{ textDecoration: 'none', color: '#fff' }}>
-                        <FontAwesomeIcon icon={faThumbsUp} />
+                    <Button variant="link" onClick={handleLike} style={{ color: '#fff' }}>
+                        <FontAwesomeIcon icon={faThumbsUp} /> {likes}
                     </Button>
-                    <Button variant="link" onClick={() => handleComment(bet.id)} style={{ textDecoration: 'none', color: '#fff' }}>
-                        <FontAwesomeIcon icon={faComment} />
+                    <Button variant="link" onClick={toggleCommentsModal} style={{ color: '#fff' }}>
+                        <FontAwesomeIcon icon={faComment} /> {comments.length}
                     </Button>
-                    <Button variant="link" onClick={() => handleShare(bet.id)} style={{ textDecoration: 'none', color: '#fff' }}>
-                        <FontAwesomeIcon icon={faShare} />
+                    <Button variant="link" onClick={handleShare} style={{ color: '#fff' }}>
+                        <FontAwesomeIcon icon={faShare} /> {shares}
                     </Button>
                 </div>
             </Card.Footer>
+            {/* Comment Modal */}
+            <Modal show={showCommentsModal} onHide={toggleCommentsModal} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <div>
+                            <strong>Prediction:</strong> {bet.prediction}
+                        </div>
+                        <div>
+                            Maker: {bet.maker} <br />
+                            Bet Amount: {bet.betAmount} <br />
+                            Winning Amount: {bet.winningAmount}
+                        </div>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {/* Comments component */}
+                    <Comments comments={comments} onComment={handleComment} />
+                </Modal.Body>
+            </Modal>
         </Card>
     );
 };
