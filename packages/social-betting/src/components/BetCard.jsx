@@ -15,7 +15,7 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
     const handleAcceptBet = async (betId) => {
         if (walletBalance >= bet.betAmount) {
             try {
-                const updateBalance = await axios.post('https://social-test.theox.co:3030//api/transactions/accept-bet', { amount: bet.betAmount });
+                const updateBalance = await axios.post('https://social-test.theox.co:3030/api/transactions/accept-bet', { amount: bet.betAmount });
                 if (updateBalance.status === 200) {
                     const response = await axios.put(`https://social-test.theox.co:3030/api/bets/accept/${betId}`);
                     if (response.status === 200) {

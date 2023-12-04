@@ -57,7 +57,7 @@ const HomePage = () => {
 
     const fetchBets = async (status) => {
         try {
-            const response = await fetch(`https://social-test.theox.co:3030//api/bets/${status}`); // Replace with your actual API endpoint
+            const response = await fetch(`https://social-test.theox.co:3030/api/bets/${status}`); // Replace with your actual API endpoint
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

@@ -9,7 +9,7 @@ const GoogleLoginButton = ({ clientId }) => {
 
   const onSuccess = async (tokenResponse) => {
     try {
-      const response = await axios.post('https://social-test.theox.co:3030///api/auth/google', { token: tokenResponse.tokenId });
+      const response = await axios.post('https://social-test.theox.co:3030/api/auth/google', { token: tokenResponse.tokenId });
       console.log(response.data);
     } catch (error) {
       console.error(error);
