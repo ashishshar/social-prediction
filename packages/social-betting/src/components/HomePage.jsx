@@ -19,13 +19,15 @@ const HomePage = () => {
         matchedBets: [],
         closedBets: []
     });
+    
+    const token = localStorage.getItem('googleToken');
 
     useEffect(() => {
         fetchBets('open');
         fetchBets('matched');
         fetchBets('closed');
-        fetchBalance();
-    }, []);
+        fetchBalance(token);
+    }, [token]);
 
 
     const handleBetAccepted = () => {
@@ -35,9 +37,13 @@ const HomePage = () => {
     };
 
 
-    const fetchBalance = async () => {
+    const fetchBalance = async (token) => {
         try {
-            const response = await axios.get('https://social-test.theox.co:3030/api/transactions/balance');
+            const response = await axios.get('https://social-test.theox.co:3030/api/transactions/balance', {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
             setBalance(response.data.balance);
         } catch (error) {
             console.error('Error fetching balance:', error);
@@ -61,7 +67,9 @@ const HomePage = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
             const data = await response.json();
+            console.log()
             setBets(prevBets => ({
                 ...prevBets,
                 [`${status}Bets`]: data
@@ -102,9 +110,9 @@ const HomePage = () => {
                 }}>SB</h5>
                 <div>
                     <span>Balance - ${balance}
-                    <GoogleLoginProviderWrapper clientId="460608069611-j13onr1uke9e3sh3583annarfa2ut0sj.apps.googleusercontent.com" />
+                        <GoogleLoginProviderWrapper clientId="460608069611-j13onr1uke9e3sh3583annarfa2ut0sj.apps.googleusercontent.com" />
                     </span>
-                    
+
                 </div>
             </div>
             <div style={{
@@ -123,19 +131,19 @@ const HomePage = () => {
                 <Tab.Container activeKey={activeTab} onSelect={(key) => setActiveTab(key)} style={{ width: '100%' }}>
                     <Tab.Content style={{ width: '100%' }}>
                         <Tab.Pane eventKey="open" style={{ padding: 0 }}>
-                            <OpenBets bets={getBetsByStatus('open')} walletBalance={balance} onBalanceUpdate={onBalanceUpdate}  onBetAccepted={handleBetAccepted} />
+                            <OpenBets bets={getBetsByStatus('open')} walletBalance={balance} onBalanceUpdate={onBalanceUpdate} onBetAccepted={handleBetAccepted} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="matched" style={{ padding: 0 }}>
-                            <MatchedBets bets={getBetsByStatus('matched')}/>
+                            <MatchedBets bets={getBetsByStatus('matched')} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="closed" style={{ padding: 0 }}>
-                            <ClosedBets bets={getBetsByStatus('closed')}/>
+                            <ClosedBets bets={getBetsByStatus('closed')} />
                         </Tab.Pane>
                         {activeTab === 'addBet' && <Tab.Pane eventKey="addBet" style={{ padding: 0 }}>
-                            <BetForm onSelectTab={onSelectTab} walletBalance={balance} onBetCreateUpdate={onBetCreateUpdate}/>
+                            <BetForm onSelectTab={onSelectTab} walletBalance={balance} onBetCreateUpdate={onBetCreateUpdate} />
                         </Tab.Pane>}
                         <Tab.Pane eventKey="wallet" style={{ padding: 0 }} >
-                            <Wallet walletBalance={balance} onBalanceUpdate={onBalanceUpdate}/>
+                            <Wallet walletBalance={balance} onBalanceUpdate={onBalanceUpdate} />
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>

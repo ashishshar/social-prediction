@@ -1,5 +1,4 @@
 import fs from 'fs';
-import http from 'http';  // Import the http module
 import https from 'https';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -37,11 +36,7 @@ if (process.env.HTTPS === 'true') {
     console.error('Error reading SSL files:', readError.message);
     process.exit(1); // Exit if there is an error
   }
-
-  // Only proceed if both key and cert are successfully read
   const options = { key, cert };
-
-  // Create an HTTPS server with the certificate and key
   const httpsServer = https.createServer(options, app);
 
   // Start the HTTPS server

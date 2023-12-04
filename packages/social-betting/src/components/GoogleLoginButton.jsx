@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const GoogleLoginButton = ({ clientId }) => {
-  const [token, setToken] = useState(null);
 
   const onSuccess = async (tokenResponse) => {
     try {
-      const response = await axios.post('https://social-test.theox.co:3030/api/auth/google', { token: tokenResponse.tokenId });
+      localStorage.setItem('googleToken', tokenResponse.access_token);
+      const response = await axios.post('https://social-test.theox.co:3030/api/auth/google', {}, {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.access_token}`,
+        },
+      });
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -30,8 +34,8 @@ const GoogleLoginButton = ({ clientId }) => {
 
 
   return (
-    <button variant="link" onClick={() => login()}  style={{ color: 'inherit', backgroundColor: 'transparent', border: 'none', boxShadow: 'none', marginLeft:'5px' }}>
-      <FontAwesomeIcon icon={faUser} size='lg'/>
+    <button variant="link" onClick={() => login()} style={{ color: 'inherit', backgroundColor: 'transparent', border: 'none', boxShadow: 'none', marginLeft: '5px' }}>
+      <FontAwesomeIcon icon={faUser} size='lg' />
     </button>
   );
 };

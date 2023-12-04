@@ -6,10 +6,10 @@ const router = express.Router();
 router.get('/:status', getAllBetsByStatus)
 router.get('/bet/:id', getBetById);
 router.put('/accept/:id', acceptBet);
-router.post('/create', createBet);
-router.post('/like/:predictionId', betLikes);
-router.post('/share/:predictionId', betShare);
-router.post('/comment/:predictionId', betComment);
+router.post('/create', authenticate, createBet);
+router.post('/like/:predictionId', authenticate, betLikes);
+router.post('/share/:predictionId', authenticate, betShare);
+router.post('/comment/:predictionId', authenticate, betComment);
 
 
 export default router;

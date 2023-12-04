@@ -1,8 +1,15 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-    user_name: String,
-    user_phone: String
+    googleId: String,
+    email: String,
+    verifiedEmail: Boolean,
+    name: String,
+    givenName: String,
+    familyName: String,
+    picture: String,
+    locale: String,
+    hd: String,
 });
 
 export const User = mongoose.model('User', UserSchema, 'users');
@@ -15,7 +22,7 @@ const PredictionSchema = new mongoose.Schema({
     status: String,
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
     shares: { type: Number, default: 0 },
-    comments: [{ 
+    comments: [{
         text: String,
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         createdAt: { type: Date, default: Date.now }

@@ -50,6 +50,7 @@ export const acceptBet = async (req, res) => {
 
 export const createBet = async (req, res) => {
     const { prediction, betAmount, maker } = req.body;
+    const user = req.user;
 
     try {
         if (!prediction || !betAmount || !maker) {

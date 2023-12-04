@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal, Form, ListGroup } from 'react-bootstrap';
+import { Card, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faShare } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
     const [comments, setComments] = useState(bet.comments || []);
     const [commentText, setCommentText] = useState('');
     const [showCommentsModal, setShowCommentsModal] = useState(false);
+    const token = localStorage.getItem('googleToken');
 
     const handleAcceptBet = async (betId) => {
         if (walletBalance >= bet.betAmount) {
@@ -38,7 +39,11 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleLike = async () => {
         try {
-            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/like/${bet.id}`);
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/like/${bet.id}`, {}, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
             setLikes(response.data.likes);
         } catch (error) {
             console.error('Error liking bet:', error);
@@ -47,7 +52,11 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleShare = async () => {
         try {
-            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/share/${bet._id}`);
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/share/${bet._id}`, {}, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
             setShares(response.data.shares);
         } catch (error) {
             console.error('Error sharing bet:', error);
@@ -56,9 +65,14 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
 
     const handleComment = async (text) => {
         try {
-            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text });
+            const response = await axios.post(`https://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text }, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
             setComments(response.data);
             setCommentText('');
+            console.log(commentText);
         } catch (error) {
             console.error('Error commenting:', error);
         }

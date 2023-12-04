@@ -4,8 +4,6 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Function to set authentication status (login/logout)
   const setAuthStatus = (status) => {
     setIsAuthenticated(status);
   };

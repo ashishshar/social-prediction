@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListGroup, Form, Button, Image } from 'react-bootstrap';
+import { ListGroup, Form, Button } from 'react-bootstrap';
 
 const Comments = ({ comments, onComment }) => {
   const [commentText, setCommentText] = useState('');

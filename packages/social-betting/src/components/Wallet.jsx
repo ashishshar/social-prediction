@@ -9,7 +9,8 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
     const [showDepositModal, setShowDepositModal] = useState(false);
     const [showWithdrawModal, setShowWithdrawModal] = useState(false);
     const [history, setHistory] = useState([]);
-    // Fetch balance from the server
+    const token = localStorage.getItem('googleToken');
+    
     useEffect(() => {
         setBalance(walletBalance);
     }, [walletBalance]);
@@ -19,9 +20,17 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         // Fetch balance and transaction history when the component mounts
         const fetchWalletDetails = async () => {
             try {
-                const balanceResponse = await axios.get('https://social-test.theox.co:3030/api/transactions/balance');
+                const balanceResponse = await axios.get('https://social-test.theox.co:3030/api/transactions/balance', {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 setBalance(balanceResponse.data.balance);
-                const historyResponse = await axios.get('https://social-test.theox.co:3030/api/transactions/transaction-history');
+                const historyResponse = await axios.get('https://social-test.theox.co:3030/api/transactions/transaction-history', {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 setHistory(historyResponse.data);
             } catch (error) {
                 console.error('Error fetching wallet details:', error);
@@ -29,14 +38,18 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         };
 
         fetchWalletDetails();
-    }, []);
+    }, [token]);
 
 
     const handleDeposit = async () => {
         const numberAmount = parseFloat(amount);
         if (numberAmount > 0) {
             try {
-                const response = await axios.post('https://social-test.theox.co:3030/api/transactions/deposit', { amount: numberAmount });
+                const response = await axios.post('https://social-test.theox.co:3030/api/transactions/deposit', { amount: numberAmount }, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 
                 setBalance(response.data.balance);
                 setHistory(response.data.transactions);
@@ -55,7 +68,11 @@ const WalletPage = ({walletBalance,  onBalanceUpdate}) => {
         const numberAmount = parseFloat(amount);
         if (numberAmount > 0 && numberAmount <= balance) {
             try {
-                const response = await axios.post('https://social-test.theox.co:3030/api/transactions/withdraw', { amount: numberAmount });
+                const response = await axios.post('https://social-test.theox.co:3030/api/transactions/withdraw', { amount: numberAmount }, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 setBalance(response.data.balance);
                 setHistory(response.data.transactions);
                 setAmount('');
