@@ -18,19 +18,15 @@ connectDB();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-let server 
+let server
 
-if (isProduction) {
-  // In production, use HTTPS
-  const options = {
-    key: fs.readFileSync('./social-prediction.key'),
-    cert: fs.readFileSync('./social-prediction.key')
-  };
-  server = https.createServer(options, app);
-} else {
-  // In development, use HTTP
-  server = http.createServer(app);
-}
+
+const options = {
+  key: fs.readFileSync('./social-prediction.key'),
+  cert: fs.readFileSync('./social-prediction.key')
+};
+
+server = https.createServer(options, app);
 
 
 app.use(cors());
