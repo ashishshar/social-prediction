@@ -41,9 +41,9 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
         try {
             const response = await axios.post(`https://social-test.theox.co:3030/api/bets/like/${bet.id}`, {}, {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
-              });
+            });
             setLikes(response.data.likes);
         } catch (error) {
             console.error('Error liking bet:', error);
@@ -54,10 +54,17 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
         try {
             const response = await axios.post(`https://social-test.theox.co:3030/api/bets/share/${bet._id}`, {}, {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
-              });
-            setShares(response.data.shares);
+            });
+
+            if (response.status === 200) {
+                setShares(response.data.shares);
+                const shareableLink = `#${bet._id}`; // Modify this to include more details if needed
+                alert('Share this bet: ' + window.location.origin + shareableLink);
+            } else {
+                throw new Error('Error sharing bet');
+            }
         } catch (error) {
             console.error('Error sharing bet:', error);
         }
@@ -67,9 +74,9 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
         try {
             const response = await axios.post(`https://social-test.theox.co:3030/api/bets/comment/${bet._id}`, { text: text }, {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
-              });
+            });
             setComments(response.data);
             setCommentText('');
             console.log(commentText);
@@ -104,13 +111,13 @@ const BetCard = ({ bet, status, walletBalance, onBetAccepted }) => {
                             Accept
                         </Button>
                     )}
-                    <Button variant="link" onClick={handleLike} style={{ color: '#fff', textDecoration: 'none'  }}>
+                    <Button variant="link" onClick={handleLike} style={{ color: '#fff', textDecoration: 'none' }}>
                         <FontAwesomeIcon icon={faThumbsUp} /> {likes}
                     </Button>
                     <Button variant="link" onClick={toggleCommentsModal} style={{ color: '#fff', textDecoration: 'none' }}>
                         <FontAwesomeIcon icon={faComment} /> {comments.length}
                     </Button>
-                    <Button variant="link" onClick={handleShare} style={{ color: '#fff', textDecoration: 'none'  }}>
+                    <Button variant="link" onClick={handleShare} style={{ color: '#fff', textDecoration: 'none' }}>
                         <FontAwesomeIcon icon={faShare} /> {shares}
                     </Button>
                 </div>
